@@ -9,7 +9,7 @@ const TeamMembers = (props) => {
         let newMembers = []
         for(let i= 1; i <= 10; i++){
             rows.push(i)
-            newMembers.push(null)
+            newMembers.push(undefined)
         }
         setTableRows(rows)
         props.setMembers(newMembers)
@@ -38,9 +38,9 @@ const TeamMembers = (props) => {
 
 const TableRow = (props) => {
 
-    const [firstName, setFirstName] = useState()
-    const [lastName, setLastName] = useState()
-    const [time, setTime] = useState()
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [time, setTime] = useState('')
 
     useEffect(()=>{
         let newMembers = props.members
@@ -52,16 +52,16 @@ const TableRow = (props) => {
         <tr>
             <td>{props.num}</td>
             <td>
-                <input onChange={(e)=>{
+                <input value={firstName} onChange={(e)=>{
                     setFirstName(e.target.value)
                 }} type="text"/>
             </td>
             <td>
-                <input onChange={(e)=>{
+                <input value={lastName} onChange={(e)=>{
                     setLastName(e.target.value)}} type="text"/>
             </td>
             <td>
-                <input onChange={(e)=>{
+                <input value={time} onChange={(e)=>{
                     setTime(e.target.value)}} type="time"/>
             </td>
             <td>

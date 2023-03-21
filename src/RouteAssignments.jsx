@@ -9,7 +9,7 @@ const RouteAssignments = (props) => {
         .then(data => {
             setApiResponse(data)
         })
-    },[])
+    })
 
   return (
     <div>
@@ -39,14 +39,6 @@ const RouteAssignments = (props) => {
 const TableRow = (props) => {
     let {id, distance, startingLocation, arrivalLocation, locationName} = props.rowData
 
-    const [members, setMembers] = useState([])
-
-    useEffect(()=>{
-        // let newMembers = props.members.map( value =>{ return value })
-        // setMembers(newMembers)
-        console.log("members:", new Date())
-    }, [props.members])
-
     return (
         <tr>
             <td>{id}</td>
@@ -56,7 +48,10 @@ const TableRow = (props) => {
             <td>{locationName}</td>
             <td>
                 <select>
-                    {members.map((value, idx) => <option key={idx}>{value}</option>) }
+                    {props.members.map((value, idx) => {
+                        if(value.length > 1){return <option key={idx}>{value}</option>}
+                        return
+                    }) }
                 </select>
             </td>
             <td></td>

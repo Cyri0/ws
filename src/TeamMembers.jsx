@@ -1,19 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { MembersContext } from './App.jsx'
 
 const TeamMembers = (props) => {
-
-    const [tableRows, setTableRows] = useState([])
-
-    useEffect(()=>{
-        let rows = []
-        let newMembers = []
-        for(let i= 1; i <= 10; i++){
-            rows.push(i)
-            newMembers.push(undefined)
-        }
-        setTableRows(rows)
-        props.setMembers(newMembers)
-    }, [])
+    const [tableRows, setTableRows] = useState([1,2,3,4,5,6,7,8,9,10])
 
     return (
     <div>
@@ -29,7 +18,7 @@ const TeamMembers = (props) => {
                 </tr>
             </thead>
             <tbody>
-                { tableRows.map( (value, idx) => <TableRow members={props.members} setMembers={props.setMembers} key={idx} idx={idx} num={value}/>) }
+                { tableRows.map( (value, idx) => <TableRow setMembers={props.setMembers} key={idx} idx={idx} num={value}/>) }
             </tbody>
         </table>
     </div>
@@ -41,12 +30,17 @@ const TableRow = (props) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [time, setTime] = useState('')
+    
+    const [members, setMembers] = useContext(MembersContext)
 
     useEffect(()=>{
-        let newMembers = props.members
+        let newMembers = members.map( value => value )
         newMembers[props.idx] = (firstName || "") + " " + (lastName || "")
-        props.setMembers(newMembers)
+        setMembers(newMembers)
     }, [firstName, lastName, time])
+
+    useEffect(()=>{
+    }, [members])
 
     return (
         <tr>

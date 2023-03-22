@@ -1,15 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { MembersContext } from './App.jsx'
+
 
 const RouteAssignments = (props) => {
     const [apiResponse, setApiResponse] = useState([])
 
     useEffect(()=>{
-        fetch("http://localhost:8000/data.json")
+        fetch("http://localhost:8000/message.json")
         .then(res => res.json())
         .then(data => {
             setApiResponse(data)
         })
-    })
+    }, [])
 
   return (
     <div>
@@ -29,7 +31,7 @@ const RouteAssignments = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {apiResponse.map((value, idx) => <TableRow key={idx} members={props.members} rowData={value}/> )}
+                {apiResponse.map((value, idx) => <TableRow key={idx} rowData={value}/> )}
             </tbody>
         </table>
     </div>
@@ -38,6 +40,8 @@ const RouteAssignments = (props) => {
 
 const TableRow = (props) => {
     let {id, distance, startingLocation, arrivalLocation, locationName} = props.rowData
+
+    let [members, setMembers] = useContext(MembersContext)
 
     return (
         <tr>
@@ -48,7 +52,7 @@ const TableRow = (props) => {
             <td>{locationName}</td>
             <td>
                 <select>
-                    {props.members.map((value, idx) => {
+                    {members.map((value, idx) => {
                         if(value.length > 1){return <option key={idx}>{value}</option>}
                         return
                     }) }

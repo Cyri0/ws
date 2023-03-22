@@ -1,20 +1,20 @@
-import { useState , useEffect} from 'react'
-
+import { useState , createContext} from 'react'
 import RouteAssignments from './RouteAssignments'
 import TeamMembers from './TeamMembers'
-
 import './App.css'
 
+export const MembersContext = createContext()
+
 function App() {
-
-  const[members, setMembers] = useState([])
-
+  const[members, setMembers] = useState(["","","","","","","","","",""])
 
   return (
-    <div className="App">
-        <TeamMembers setMembers={setMembers} members={members}/>
-        <RouteAssignments members={members}/>
-    </div>
+    <MembersContext.Provider value={[members, setMembers]}>
+      <div className="App">
+          <TeamMembers/>
+          <RouteAssignments/>
+      </div>
+    </MembersContext.Provider>
   )
 }
 
